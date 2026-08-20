@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0B0B12" />
+  <title>LectureFlow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- ============ HOME SCREEN ============ -->
+    <section id="home-screen" class="screen active" aria-label="Home">
+      <header class="home-header">
+        <div class="greeting">
+          <p class="greeting-hi">Good evening 👋</p>
+          <h1 class="greeting-title">Let's plan your<br /><span class="accent">college day.</span></h1>
+        </div>
+        <div class="avatar" aria-label="Profile">A</div>
+      </header>
+
+      <!-- Today's Schedule Card -->
+      <div class="schedule-card">
+        <div class="schedule-glow" aria-hidden="true"></div>
+        <div class="card-label-row">
+          <span class="card-label">TODAY'S SCHEDULE</span>
+          <span class="cal-badge" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+          </span>
+        </div>
+        <h2 class="card-title">Your College Day</h2>
+        <div class="time-range">
+          <div class="time-block">
+            <span class="time-tag">START</span>
+            <span id="home-start" class="time-value">7:40 AM</span>
+          </div>
+          <span class="time-arrow">→</span>
+          <div class="time-block">
+            <span class="time-tag">END</span>
+            <span id="home-end" class="time-value">1:30 PM</span>
+          </div>
+        </div>
+        <div class="stat-row">
+          <div class="stat">
+            <span id="home-lectures" class="stat-value">6</span>
+            <span class="stat-label">Lectures</span>
+          </div>
+          <div class="stat">
+            <span id="home-each" class="stat-value">55m</span>
+            <span class="stat-label">Each lecture</span>
+          </div>
+          <div class="stat">
+            <span id="home-break" class="stat-value">20m</span>
+            <span class="stat-label">Break</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Create Timetable Section -->
+      <div class="create-section">
+        <span class="section-label">GET STARTED</span>
+        <h2 class="section-title">Create a timetable</h2>
+        <p class="section-desc">Enter your college timings, lectures, subjects and break. We'll calculate everything for you.</p>
+        <button id="open-setup-btn" class="btn btn-primary btn-large" type="button">
+          Create My Timetable <span class="btn-arrow">→</span>
+        </button>
+      </div>
+
+      <!-- Quick Overview -->
+      <div class="quick-overview">
+        <span class="section-label">QUICK OVERVIEW</span>
+        <div class="overview-grid">
+          <div class="overview-card">
+            <span id="overview-duration" class="overview-value">5h 50m</span>
+            <span class="overview-label">College Duration</span>
+          </div>
+          <div class="overview-card">
+            <span id="overview-subjects" class="overview-value">6</span>
+            <span class="overview-label">Subjects</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SETUP SCREEN ============ -->
+    <section id="setup-screen" class="screen" aria-label="Setup">
+      <header class="sub-header">
+        <button class="back-btn" id="setup-back" type="button" aria-label="Back">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" />
+          </svg>
+        </button>
+        <div class="sub-header-text">
+          <span class="sub-label">SETUP</span>
+          <h2 class="sub-title">Create your timetable</h2>
+        </div>
+      </header>
+
+      <form id="setup-form" class="form" autocomplete="off" novalidate>
+        <div class="field-row">
+          <div class="field">
+            <label for="start-time">College Start Time</label>
+            <input type="time" id="start-time" name="start-time" value="07:40" required />
+            <span class="field-hint">When your first lecture begins</span>
+          </div>
+          <div class="field">
+            <label for="end-time">College End Time</label>
+            <input type="time" id="end-time" name="end-time" value="13:30" required />
+            <span class="field-hint">When your day finishes</span>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="num-lectures">Number of Lectures</label>
+            <input type="number" id="num-lectures" min="1" max="20" value="6" required />
+            <span class="field-hint">Total sessions in a day</span>
+          </div>
+          <div class="field">
+            <label for="num-subjects">Number of Subjects</label>
+            <input type="number" id="num-subjects" min="1" max="20" value="4" required />
+            <span class="field-hint">Different subjects you study</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="break-duration">Break Duration <span class="field-unit">(minutes)</span></label>
+          <input type="number" id="break-duration" min="0" max="120" value="20" required />
+          <span class="field-hint">A rest period placed mid-day</span>
+        </div>
+
+        <!-- Subjects allocation -->
+        <div class="subjects-block">
+          <div class="subjects-header">
+            <span class="section-label">SUBJECTS</span>
+            <div id="allocation-counter" class="allocation-counter" aria-live="polite">
+              <span class="alloc-text">Allocated Lectures: <strong id="alloc-current">0</strong> / <strong id="alloc-total">6</strong></span>
+            </div>
+          </div>
+          <div id="subject-list" class="subject-list"></div>
+        </div>
+
+        <div id="validation-msg" class="validation-msg" role="alert"></div>
+
+        <button type="submit" id="generate-btn" class="btn btn-primary btn-large" >
+          Generate Timetable <span class="btn-arrow">→</span>
+        </button>
+      </form>
+    </section>
+
+    <!-- ============ RESULT SCREEN ============ -->
+    <section id="result-screen" class="screen" aria-label="Result">
+      <header class="sub-header">
+        <button class="back-btn" id="result-back" type="button" aria-label="Back">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" />
+          </svg>
+        </button>
+        <div class="sub-header-text">
+          <span class="sub-label">YOUR SCHEDULE</span>
+          <h2 class="sub-title">Today's Timetable</h2>
+        </div>
+      </header>
+
+      <!-- Summary cards -->
+      <div class="summary-grid">
+        <div class="summary-card">
+          <span id="sum-duration" class="summary-value">5h 50m</span>
+          <span class="summary-label">College Duration</span>
+        </div>
+        <div class="summary-card">
+          <span id="sum-each" class="summary-value">55m</span>
+          <span class="summary-label">Each Lecture</span>
+        </div>
+        <div class="summary-card">
+          <span id="sum-subjects" class="summary-value">4</span>
+          <span class="summary-label">Subjects</span>
+        </div>
+        <div class="summary-card">
+          <span id="sum-break" class="summary-value">20m</span>
+          <span class="summary-label">Break</span>
+        </div>
+      </div>
+
+      <!-- Timetable card -->
+      <div class="timetable-card">
+        <div class="card-label-row">
+          <span class="card-label">SCHEDULE</span>
+          <span id="tt-count" class="tt-count">6 Lectures</span>
+        </div>
+        <h2 class="card-title">Your lectures</h2>
+        <div id="timetable-list" class="timetable-list"></div>
+      </div>
+
+      <div class="result-actions">
+        <div class="result-actions-row">
+          <button id="edit-btn" class="btn btn-secondary" type="button">Edit Timetable</button>
+          <button id="new-btn" class="btn btn-secondary" type="button">Create New</button>
+        </div>
+        <button id="copy-btn" class="btn btn-ghost" type="button">Copy Schedule</button>
+      </div>
+    </section>
+
+    <!-- ============ SCHEDULE SCREEN ============ -->
+    <section id="schedule-screen" class="screen" aria-label="Schedule">
+      <header class="sub-header static-header">
+        <div class="sub-header-text">
+          <span class="sub-label">SCHEDULE</span>
+          <h2 class="sub-title">Your Timetable</h2>
+        </div>
+      </header>
+
+      <div id="schedule-empty" class="empty-state">
+        <div class="empty-icon" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+        </div>
+        <h3 class="empty-title">No timetable yet</h3>
+        <p class="empty-desc">Create your first timetable and we'll organize your college day for you.</p>
+        <button id="schedule-create-btn" class="btn btn-primary" type="button">Create Timetable →</button>
+      </div>
+
+      <div id="schedule-content" class="schedule-content hidden">
+        <div class="summary-grid">
+          <div class="summary-card">
+            <span id="sched-sum-duration" class="summary-value">—</span>
+            <span class="summary-label">College Duration</span>
+          </div>
+          <div class="summary-card">
+            <span id="sched-sum-each" class="summary-value">—</span>
+            <span class="summary-label">Each Lecture</span>
+          </div>
+          <div class="summary-card">
+            <span id="sched-sum-subjects" class="summary-value">—</span>
+            <span class="summary-label">Subjects</span>
+          </div>
+          <div class="summary-card">
+            <span id="sched-sum-break" class="summary-value">—</span>
+            <span class="summary-label">Break</span>
+          </div>
+        </div>
+        <div class="timetable-card">
+          <div class="card-label-row">
+            <span class="card-label">SCHEDULE</span>
+            <span id="sched-tt-count" class="tt-count">—</span>
+          </div>
+          <h2 class="card-title">Your lectures</h2>
+          <div id="sched-timetable-list" class="timetable-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SETTINGS SCREEN ============ -->
+    <section id="settings-screen" class="screen" aria-label="Settings">
+      <header class="sub-header static-header">
+        <div class="sub-header-text">
+          <span class="sub-label">SETTINGS</span>
+          <h2 class="sub-title">Preferences</h2>
+        </div>
+      </header>
+
+      <div class="settings-brand">
+        <div class="brand-mark">LF</div>
+        <div class="brand-info">
+          <span class="brand-name">LectureFlow</span>
+          <span class="brand-version">Version 1.0</span>
+        </div>
+      </div>
+
+      <div class="settings-list">
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <span class="settings-row-title">Dark Mode</span>
+            <span class="settings-row-desc">Already enabled</span>
+          </div>
+          <div class="toggle on" aria-label="Dark mode toggle"><span class="toggle-knob"></span></div>
+        </div>
+        <button id="clear-btn" class="settings-row settings-row-btn" type="button">
+          <div class="settings-row-text">
+            <span class="settings-row-title danger">Clear Saved Timetable</span>
+            <span class="settings-row-desc">Remove the timetable from this device</span>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+        <button id="about-btn" class="settings-row settings-row-btn" type="button">
+          <div class="settings-row-text">
+            <span class="settings-row-title">About LectureFlow</span>
+            <span class="settings-row-desc">What this app does</span>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============ BOTTOM NAV ============ -->
+    <nav class="bottom-nav" aria-label="Bottom navigation">
+      <button class="nav-item active" data-screen="home" type="button" aria-label="Home">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 9.5L12 3l9 6.5" /><path d="M5 10v10h14V10" />
+        </svg>
+        <span>Home</span>
+      </button>
+      <button class="nav-item" data-screen="schedule" type="button" aria-label="Schedule">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+        </svg>
+        <span>Schedule</span>
+      </button>
+      <button class="nav-item" data-screen="settings" type="button" aria-label="Settings">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+        </svg>
+        <span>Settings</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Confirm dialog -->
+  <div id="dialog-overlay" class="dialog-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
+    <div class="dialog">
+      <h3 id="dialog-title" class="dialog-title">Clear Saved Timetable?</h3>
+      <p id="dialog-desc" class="dialog-desc">This will remove the saved timetable from this device. This action cannot be undone.</p>
+      <div class="dialog-actions">
+        <button id="dialog-cancel" class="btn btn-secondary" type="button">Cancel</button>
+        <button id="dialog-confirm" class="btn btn-danger" type="button">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- About dialog -->
+  <div id="about-overlay" class="dialog-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="about-title">
+    <div class="dialog">
+      <h3 id="about-title" class="dialog-title">About LectureFlow</h3>
+      <p class="dialog-desc">LectureFlow is a smart college timetable planner. Enter your college timings, the number of subjects and how many lectures each subject has, and the app calculates lecture durations, break placement and a full daily schedule automatically. Your timetable is saved on this device only.</p>
+      <div class="dialog-actions">
+        <button id="about-close" class="btn btn-primary" type="button">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <script type="module" src="/script.js"></script>
+</body>
+</html>
